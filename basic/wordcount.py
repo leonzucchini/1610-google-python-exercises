@@ -39,11 +39,27 @@ print_words() and print_top().
 
 import sys
 
-# +++your code here+++
-# Define print_words(filename) and print_top(filename) functions.
-# You could write a helper utility function that reads a file
-# and builds and returns a word/count dict for it.
-# Then print_words() and print_top() can just call the utility function.
+### Helper function
+# Read text from file
+# Split text into words (list)
+# Loop through words
+  # check if the word is in the dictionary key
+  # if not, add a new key and a count
+  # if yes, add increment to the value for that word's key
+# Return dictionary
+
+### 
+# print words
+# print all words and their count
+
+
+
+#print_words(filename)
+
+### print top words in order of their frequency
+#print_top(filename)
+
+
 
 ###
 
