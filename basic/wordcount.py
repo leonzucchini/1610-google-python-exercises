@@ -40,19 +40,32 @@ print_words() and print_top().
 import sys
 
 ### Helper function
-# Read text from file
-# Split text into words (list)
-# Loop through words
-  # check if the word is in the dictionary key
-  # if not, add a new key and a count
-  # if yes, add increment to the value for that word's key
-# Return dictionary
+def builddict(filename):
+
+  # Placeholder for results
+  dict = {}
+
+  # Read text from file
+  f = open(filename, 'rU')
+  for line in f:
+  
+    # Split text for that line into a list of words
+    words = line.split()
+
+    # Loop through words in the list (one line)
+    for word in words:
+    
+      if word not in dict:       # check if the word is in the dictionary key
+        dict[word] = 1           # if not, add a new key and a count
+      else:
+        dict[word] += 1          # if yes, add increment to the value for that word's key
+  return dict
 
 ### 
 # print words
-# print all words and their count
-
-
+def print_words(filename):
+  dict = builddict(filename)
+  print dict
 
 #print_words(filename)
 
@@ -69,9 +82,10 @@ def main():
   if len(sys.argv) != 3:
     print 'usage: ./wordcount.py {--count | --topcount} file'
     sys.exit(1)
-
+    
   option = sys.argv[1]
   filename = sys.argv[2]
+  
   if option == '--count':
     print_words(filename)
   elif option == '--topcount':
