@@ -39,7 +39,7 @@ print_words() and print_top().
 
 import sys
 
-### Helper function
+### Helper function to build dictionary from text
 def builddict(filename):
 
   # Placeholder for results
@@ -67,21 +67,25 @@ def print_words(filename):
   dict = builddict(filename)
   print dict
 
-#print_words(filename)
-
 ### print top words in order of their frequency
-#print_top(filename)
+def print_top(filename):
+  dict = builddict(filename)     # build dictionary from file
+  tuples = dict.items()          # split dictionary into tuples
 
+  def lastvalue(tup):
+    last = tup[-1]
+    return last
 
+  topwords = sorted(tuples, key = lastvalue, reverse = True)[:99]
 
-###
+  print topwords
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
 def main():
   if len(sys.argv) != 3:
     print 'usage: ./wordcount.py {--count | --topcount} file'
-    sys.exit(1)
+    #sys.exit(1)
     
   option = sys.argv[1]
   filename = sys.argv[2]
