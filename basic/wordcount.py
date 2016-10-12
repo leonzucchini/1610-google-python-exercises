@@ -72,10 +72,13 @@ def print_top(filename):
   dict = builddict(filename)     # build dictionary from file
   tuples = dict.items()          # split dictionary into tuples
 
+  def lastvalue(tup):
+    last = tup[-1]
+    return last
 
-  print tuples
+  topwords = sorted(tuples, key = lastvalue, reverse = True)[:99]
 
-###
+  print topwords
 
 # This basic command line argument parsing code is provided and
 # calls the print_words() and print_top() functions which you must define.
