@@ -19,14 +19,21 @@ and run Python code; now you just need to learn Python!
 
 import sys
 
+def Cat(filename):
+  f = open(filename, 'rU')
+  text = f.read()
+  print text,
+
+#  lines = f.readlines()
+#  print lines
+
+#  for line in f:
+#    print line,
+  f.close()
+
 # Define a main() function that prints a little greeting.
 def main():
-  # Get the name from the command line, using 'World' as a fallback.
-  if len(sys.argv) >= 2:
-    name = sys.argv[1]
-  else:
-    name = 'World'
-  print 'Cheers', name
+  Cat(sys.argv[1])
 
 # This is the standard boilerplate that calls the main() function.
 if __name__ == '__main__':
