@@ -43,11 +43,34 @@ columns, so the output looks better.
 
 import random
 import sys
+import string
 
 
 def mimic_dict(filename):
   """Returns mimic dict mapping each word to list of words which follow it."""
-  # +++your code here+++
+
+  # Open file, read text, split into word list
+  f = open(filename, 'rU')
+  text = f.read()
+  words = text.split()
+
+  # Build dictionary of words following other words
+  dictFollowingWords = {'': words[0]}
+  for i in range(0, len(words[:100])):
+    word = words[i]
+    nextWord = words[i+1]
+
+    #####################################
+    #####################################
+    ### HERE HERE HERE HERE
+    #####################################
+    #####################################
+    if word in dictFollowingWords:
+      dictFollowingWords['word'] = dictFollowingWords['word'].append('word')
+    else:
+      dictFollowingWords['word'] = [nextWord]
+
+    print dictFollowingWords
   return
 
 
