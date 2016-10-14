@@ -44,7 +44,7 @@ columns, so the output looks better.
 import random
 import sys
 import string
-
+from random import randint
 
 def mimic_dict(filename):
   """Returns mimic dict mapping each word to list of words which follow it."""
@@ -55,29 +55,35 @@ def mimic_dict(filename):
   words = text.split()
 
   # Build dictionary of words following other words
-  dictFollowingWords = {'': words[0]}
-  for i in range(0, len(words[:100])):
+  mimic_dict = {'': [words[0]]}
+  for i in range(0, len(words)-1):
     word = words[i]
     nextWord = words[i+1]
 
-    #####################################
-    #####################################
-    ### HERE HERE HERE HERE
-    #####################################
-    #####################################
-    if word in dictFollowingWords:
-      dictFollowingWords['word'] = dictFollowingWords['word'].append('word')
+    if word not in mimic_dict.keys():
+      mimic_dict[word] = [nextWord]
     else:
-      dictFollowingWords['word'] = [nextWord]
+      mimic_dict[word].append(nextWord)
 
-    print dictFollowingWords
-  return
+  return mimic_dict
 
 
 def print_mimic(mimic_dict, word):
-  """Given mimic dict and start word, prints 200 random words."""
-  # +++your code here+++
-  return
+  
+  mimic_list = [word]
+  mimic_string = ''
+  for i in range(0,199):
+    lastWord = mimic_list[-1]
+    if lastWord not in mimic_dict.keys():
+      nextWord = ''
+    else:
+      nextWords = mimic_dict[lastWord]
+      nextWord = nextWords[randint(1, len(nextWords))-1]
+    mimic_list.append(nextWord)
+    mimic_string = mimic_string + ' ' + mimic_list[-1]
+
+  print mimic_string
+  return 
 
 
 # Provided main(), calls mimic_dict() and mimic()
