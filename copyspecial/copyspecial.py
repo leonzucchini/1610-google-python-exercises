@@ -15,9 +15,23 @@ import commands
 """Copy Special exercise
 """
 
-# +++your code here+++
-# Write functions and modify main() to call them
+# From directory path return list of file paths that match a pattern
+def getfilenames(srcdir, pattern):
+ print type(srcdir)
+ # os.listdir(srcdir)
 
+# list files in directory
+# match file names to pattern
+# construct paths from file names
+# return paths to *do somthing with*
+
+# Copy a file to a directory
+# def todir(filepath, dst)
+# shutil.copy(src, dest)
+# os.mkdir(path)
+
+# Zip files in a directory
+# make_archive(base_name, format, root_dir=None, base_dir=None, verbose=0, dry_run=0, owner=None, group=None, logger=None)
 
 
 def main():
@@ -31,6 +45,8 @@ def main():
     print "usage: [--todir dir][--tozip zipfile] dir [dir ...]";
     sys.exit(1)
 
+  srcdir = args[0]
+  getfilenames(srcdir, 1)
   # todir and tozip are either set from command line
   # or left as the empty string.
   # The args array is left just containing the dirs.
