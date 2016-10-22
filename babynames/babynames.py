@@ -34,14 +34,44 @@ Suggested milestones for incremental development:
  -Fix main() to use the extract_names list
 """
 
+
+
 def extract_names(filename):
-  """
-  Given a file name for baby.html, returns a list starting with the year string
-  followed by the name-rank strings in alphabetical order.
-  ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
-  """
-  # +++your code here+++
-  return
+  
+  # Read text from file
+  f = open(filename, 'rU')
+  text = f.read()
+
+  names = []
+
+  # Get year
+  year_match = re.search('Popularity\sin\s(\d\d\d\d)', text)
+  if not year_match:
+    sys.stderr.write('Couldn\'t find a year!')
+    sys.exit(1)
+  year = year_match.group(1)
+  names.append(year)
+
+  # Get rank of m/f names as tuples (number, boysname, girlsname)
+  tuples = re.findall('<td>(\d*)</td><td>(\w*)</td><td>(\w*)</td>', text)
+  # print tuples
+
+  names_to_rank = {}
+
+  for rank_tuple in tuples:
+    (rank, boysname, girlsname) = rank_tuple
+    
+    if boysname not in names_to_rank.keys():
+      names_to_rank[boysname] = rank
+    if girlsname not in names_to_rank.keys():
+          names_to_rank[girlsname] = rank
+
+  sorted_keys = sorted(names_to_rank.keys())
+
+  for name in sorted_keys:
+    names.append(name + ' ' + names_to_rank[name])
+
+  return names
 
 
 def main():
@@ -61,8 +91,18 @@ def main():
     del args[0]
 
   # +++your code here+++
-  # For each filename, get the names, then either print the text output
-  # or write it to a summary file
+  for filename in args:
+    names = extract_names(filename)
+    text = '\n'.join(names)
+
+    if summary:
+        # print filename + '.summary' + '.py'
+        outf = open(filename + '.summary', 'w')
+        outf.write(text + '\n')
+        outf.close()
+    else: 
+      print text
+
   
 if __name__ == '__main__':
   main()
