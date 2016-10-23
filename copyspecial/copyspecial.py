@@ -6,6 +6,7 @@
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
 
+import re
 import sys
 import re
 import os
@@ -15,24 +16,33 @@ import commands
 """Copy Special exercise
 """
 
-# From directory path return list of file paths that match a pattern
-def getfilenames(srcdir, pattern):
- print type(srcdir)
- # os.listdir(srcdir)
+def getspecialpaths(srcdir):
+  ''' From directory path return list of file paths that match a pattern.'''
+  result = []
+  filenames = os.listdir(srcdir) # get names of files in source directory
+  for filename in filenames:
+    isspecial = re.search(r'__(\w*)__', filename) # match pattern for special files
+    if isspecial:
+      result.append(os.path.abspath(os.path.join(srcdir, filename)))
+  return result
 
-# list files in directory
-# match file names to pattern
-# construct paths from file names
-# return paths to *do somthing with*
+def copy_to_dir(paths, dstdir):
+  '''Using paths copy all files to a new directory, creating it if necessary'''
+  if not os.path.exists(dstdir):
+    os.mkdir(dstdir)
+  for path in paths:
+    fname = os.path.basename(path)
+    shutil.copy(path, os.path.join(dstdir, fname))
 
-# Copy a file to a directory
-# def todir(filepath, dst)
-# shutil.copy(src, dest)
-# os.mkdir(path)
 
-# Zip files in a directory
-# make_archive(base_name, format, root_dir=None, base_dir=None, verbose=0, dry_run=0, owner=None, group=None, logger=None)
-
+def zip_to(paths, zipfile):
+  '''Using paths zip all files into a new zip file with a given name'''
+  cmd = 'zip -j ' + zipfile + ' \"' + '\" \"'.join(paths) + '\"'
+  print "Command I'm going to do: " + cmd
+  (status, output) = commands.getstatusoutput(cmd)
+  if status:
+    sys.stderr.write(output)
+    sys.exit(1)
 
 def main():
   # This basic command line argument parsing code is provided.
@@ -45,8 +55,6 @@ def main():
     print "usage: [--todir dir][--tozip zipfile] dir [dir ...]";
     sys.exit(1)
 
-  srcdir = args[0]
-  getfilenames(srcdir, 1)
   # todir and tozip are either set from command line
   # or left as the empty string.
   # The args array is left just containing the dirs.
@@ -64,8 +72,17 @@ def main():
     print "error: must specify one or more dirs"
     sys.exit(1)
 
-  # +++your code here+++
-  # Call your functions
+  # Call all functions
+  paths = []
+  for dirname in args:
+    paths.extend(getspecialpaths(dirname))
+
+  if todir:
+    copy_to_dir(paths, todir)
+  elif tozip:
+    zip_to(paths, tozip)
+  else:
+    print '\n'.join(paths)
   
 if __name__ == "__main__":
   main()
