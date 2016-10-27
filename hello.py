@@ -19,23 +19,13 @@ and run Python code; now you just need to learn Python!
 
 import os
 import sys
-# import shutil
-# import commands
 
-# shutil.copy(source, dest) # copy path from one place to another
+def listdir(filename):
 
-def listdir(dir):
-  filenames = os.listdir(dir)
-  for filename in filenames:
-    path = os.path.join(dir, filename)
-    # print path
-    print os.path.abspath(path)
-
-
-  # f = open(filename, 'rU')
-  # text = f.read()
-  # print text
-  # f.close()
+  f = open(filename, 'rU')
+  text = f.read()
+  print text
+  f.close()
 
 # def Cat(filename):
 #   f = open(filename, 'rU')
